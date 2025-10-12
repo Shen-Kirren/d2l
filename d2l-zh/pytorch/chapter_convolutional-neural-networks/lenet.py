@@ -2,6 +2,7 @@
 import torch
 from torch import nn
 from d2l import torch as d2l
+import time
 
 net = nn.Sequential(
     nn.Conv2d(1, 6, kernel_size=5, padding=2), nn.Sigmoid(),
@@ -68,6 +69,10 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
     animator = d2l.Animator(xlabel='epoch', xlim=[1, num_epochs],
                             legend=['train loss', 'train acc', 'test acc'])
     timer, num_batches = d2l.Timer(), len(train_iter)
+    
+    # 记录训练开始时间
+    start_time = time.time()
+    print(f'开始训练，共 {num_epochs} 个 epoch...')
     for epoch in range(num_epochs):
         # 训练损失之和，训练准确率之和，样本数
         metric = d2l.Accumulator(3)
@@ -102,10 +107,16 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
         
         test_acc = evaluate_accuracy_gpu(net, test_iter)
         animator.add(epoch + 1, (None, None, test_acc))
+    
+    # 计算总训练时长
+    end_time = time.time()
+    total_time = end_time - start_time
+    
     print(f'loss {train_l:.3f}, train acc {train_acc:.3f}, '
           f'test acc {test_acc:.3f}')
     print(f'{metric[2] * num_epochs / timer.sum():.1f} examples/sec '
           f'on {str(device)}')
+    print(f'总训练时长: {total_time:.2f} 秒 ({total_time/60:.2f} 分钟)')
     
 device=torch.device('mps')
 print(device)
