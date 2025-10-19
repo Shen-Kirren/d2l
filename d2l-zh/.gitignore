@@ -1,0 +1,69 @@
+# D2L项目 - Git忽略文件配置
+
+# 数据文件和数据集 (通常很大，不应该提交到仓库)
+# 允许classify_leaves的CSV文件，但忽略其他数据文件
+data/*
+!data/classify_leaves/
+data/classify_leaves/*.zip
+# data/classify_leaves/images/ - 使用 Git LFS 管理图片
+# 但允许CSV文件
+!data/classify_leaves/*.csv
+
+# 模型文件和权重 (通常很大)
+*.params
+*.pth
+*.pt
+*.model
+*.h5
+*.pkl
+*.pickle
+
+# Jupyter Notebook 检查点
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+venv/
+env/
+ENV/
+
+# IDE 文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时文件
+*.tmp
+*.temp
+*~
+
+# 日志文件
+*.log
+logs/
+
+# 实验和输出文件
+experiments/
+outputs/
+results/
+
+# CUDA 相关
+*.cu.o
+*.ptx
+
+# 其他大文件扩展名
+*.bin
+*.dat
+*.npy
+*.npz
